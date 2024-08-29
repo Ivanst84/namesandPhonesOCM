@@ -8,7 +8,6 @@ export const generateExcel = (names: string[], phoneNumbers: string[], messages:
         Mensaje: messages[index] || '' , // Agrega los mensajes aquí
         Macros : macros[index] || '' 
     }));
-
     // Crear una hoja de cálculo
     const worksheet = XLSX.utils.json_to_sheet(data, { header: ["Nombre", "Telefono", "Mensaje", "Macros"] });
     const workbook = XLSX.utils.book_new();

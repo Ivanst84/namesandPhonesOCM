@@ -75,7 +75,7 @@ const OCRComponent: React.FC = () => {
           <TableData 
             names={firstNames} 
             phoneNumbers={phoneNumbers}  
-            messages={message} 
+            messages={messages} 
             macros={macros}  
             onGenerateExcel={handleGenerateExcel} 
           />
