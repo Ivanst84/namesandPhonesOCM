@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ExcelGenerator from './ExelGenerador';
 
 interface DataTableProps {
@@ -16,11 +16,14 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
   const finalPhoneNumbers = [...phoneNumbers, ...Array(maxLength - phoneNumbers.length).fill('')];
   const finalMessages = [...messages, ...Array(maxLength - messages.length).fill('')];
   const finalMacros = [...macros, ...Array(maxLength - macros.length).fill('')];
-   
-  const sendWhatsAppMessage = (phoneNumber: string, name: string, messages: string) => {
+  const [disabledButtons, setDisabledButtons] = useState<Set<number>>(new Set());
+
+  const sendWhatsAppMessage = (phoneNumber: string, name: string, messages: string,index:number) => {
     console.log("el mensaje",messages)
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(messages)}`;
     window.open(whatsappURL, '_blank');
+    setDisabledButtons(prev => new Set(prev).add(index));
+
   };
 
   return (
@@ -49,11 +52,12 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
                 {finalMacros[index].length > 50 ? finalMacros[index].substring(0, 50) + '...' : finalMacros[index]}
               </td>
               <td className="border border-gray-600 p-2 hidden md:table-cell">
-                <button 
-                  onClick={() => sendWhatsAppMessage(finalPhoneNumbers[index], name, finalMessages[index])}
-                  className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-400 transition"
+              <button 
+                  onClick={() => sendWhatsAppMessage(finalPhoneNumbers[index], name, finalMessages[index], index)}
+                  className={`px-2 py-1 ${disabledButtons.has(index) ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-500 hover:bg-green-400'} text-white rounded transition`}
+                  disabled={disabledButtons.has(index)}
                 >
-                  Enviar WhatsApp
+                  {disabledButtons.has(index) ? 'Enviado' : 'Enviar WhatsApp'}
                 </button>
               </td>
               {/* Solo en móviles */}
@@ -62,11 +66,12 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
                   <span className="block mb-1">{name}</span>
                   <span className="block mb-1">{finalPhoneNumbers[index]}</span>
                   <button 
-                    onClick={() => sendWhatsAppMessage(finalPhoneNumbers[index], name, finalMessages[index])}
-                    className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-400 transition"
-                  >
-                    Enviar WhatsApp
-                  </button>
+                  onClick={() => sendWhatsAppMessage(finalPhoneNumbers[index], name, finalMessages[index], index)}
+                  className={`px-2 py-1 ${disabledButtons.has(index) ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-500 hover:bg-green-400'} text-white rounded transition`}
+                  disabled={disabledButtons.has(index)}
+                >
+                  {disabledButtons.has(index) ? 'Enviado' : 'Enviar WhatsApp'}
+                </button>
                 </div>
               </td>
             </tr>

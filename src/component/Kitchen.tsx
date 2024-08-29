@@ -28,7 +28,7 @@ const OCRComponent: React.FC = () => {
   );
 
   const macros = firstNames.map((name, index) => 
-    `="https://wa.me/" & ${phoneNumbers[index]} & "?text=" & SUSTITUIR(SUSTITUIR(${messages[index]}, " ", "%20"), ",", "%2C")`
+    `="https://wa.me/" & ${phoneNumbers[index]} & "?text=" & SUSTITUIR(SUSTITUIR(${messagesCel[index]}, " ", "%20"), ",", "%2C")`
   );
 
   const handleRemoveImage = (index: number) => {
