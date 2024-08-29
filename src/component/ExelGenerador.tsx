@@ -4,12 +4,14 @@ import { generateExcel } from '../util/generateExel';
 interface ExcelGeneratorProps {
   names: string[];
   phoneNumbers: string[];
+  messages :string[];
+  macros : string [];
   onClear: () => void;
 }
 
-const ExcelGenerator: React.FC<ExcelGeneratorProps> = ({ names, phoneNumbers, onClear }) => {
+const ExcelGenerator: React.FC<ExcelGeneratorProps> = ({ names, phoneNumbers, messages,macros ,onClear }) => {
   const handleGenerateExcel = () => {
-    generateExcel(names, phoneNumbers);
+    generateExcel(names, phoneNumbers,messages,macros);
     onClear();
   };
 

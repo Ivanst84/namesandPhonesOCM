@@ -10,7 +10,7 @@ interface ImageUploaderProps {
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onDrop, onUpload, selectedImages, onRemoveImage }) => {
   return (
-    <div className="w-full max-w-4xl">
+    <div className="w-full max-w-6xl mx-auto"> {/* Aumentar el max-width del contenedor */}
       <ImageDropZone onDrop={onDrop} />
       <input 
         type="file" 
@@ -19,16 +19,16 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onDrop, onUpload, selecte
         multiple 
         className="mb-4 text-gray-900"
       />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> {/* Ajustar el número de columnas */}
         {selectedImages.map((image, index) => (
           <div 
             key={index} 
-            className="relative group w-32 h-32 overflow-hidden rounded border border-gray-700 hover:border-gray-500"
+            className="relative group w-full h-80 overflow-hidden rounded border border-gray-700 hover:border-gray-500" 
           >
             <img 
               src={image} 
               alt={`Uploaded ${index}`} 
-              className="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105"
+              className="w-full h-full object-contain transition-transform duration-300 transform grayscale"
             />
             <button 
               onClick={() => onRemoveImage(index)}
