@@ -20,7 +20,9 @@ const OCRComponent: React.FC = () => {
 
   // Extraer primeros nombres para usar en la tabla y el Excel
   const firstNames = names.map(extractFirstName);
-
+  const messagesCel = firstNames.map(name => 
+    `🌟 ¡Hola buenos días, ${name}! 🌟\nSoy Ángel, Asesor de izzi.\n\nActualmente estás pagando el precio regular. ¿Sabías que tenemos nuevas promociones para ti al realizar un cambio de servicio? Aquí te ofrecemos un nuevo comienzo con estas opciones:\n\n📶 Solo Internet: 100 megas por $369.\n📺 Internet y Cable: 80 megas por $489.\n📡 100 megas y 100 canales por $519.\n\n¡Aprovecha estas ofertas especiales y mejora tu experiencia con izzi hoy mismo!`
+  );
   const messages = firstNames.map(name => 
     `¡Hola buenos días, ${name}! Soy Ángel, Asesor de izzi. Actualmente estás pagando el precio regular. ¿Sabías que tenemos nuevas promociones para ti al realizar un cambio de servicio? ¡Te ofrecemos un nuevo comienzo con estas opciones: " & "Solo Internet: 100 megas por $369. " & "Internet y Cable: 80 megas por $489. " & "100 megas y 100 canales por $519. " & "¡Aprovecha estas ofertas especiales y mejora tu experiencia con izzi hoy mismo!"`
   );
@@ -75,7 +77,7 @@ const OCRComponent: React.FC = () => {
           <TableData 
             names={firstNames} 
             phoneNumbers={phoneNumbers}  
-            messages={messages} 
+            messages={messagesCel} 
             macros={macros}  
             onGenerateExcel={handleGenerateExcel} 
           />
