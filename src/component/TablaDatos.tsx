@@ -19,7 +19,7 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
 
   // Corrección: Usa el mensaje específico para la fila actual
   const sendWhatsAppMessage = (phoneNumber: string, name: string, message: string) => {
-    const whatsappURL = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL, '_blank');
   };
 
