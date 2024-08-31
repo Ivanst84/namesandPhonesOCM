@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import ExcelGenerator from './ExelGenerador';
 import Table from './ui/Table';
 import Spinner from './ui/Spinner';
+import ExcelGenerator from './ExelGenerador';
 
 interface DataTableProps {
   names: string[];
   phoneNumbers: string[];
   messages: string[];
   macros: string[];
-  loading: boolean; // Agrega esta prop para manejar el estado de carga
-
+  loading: boolean;
   onGenerateExcel: () => void;
-
 }
 
-const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, macros,loading, onGenerateExcel }) => {
+const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, macros, loading, onGenerateExcel }) => {
   const [finalNames, setFinalNames] = useState<string[]>([]);
   const [finalPhoneNumbers, setFinalPhoneNumbers] = useState<string[]>([]);
   const [finalMessages, setFinalMessages] = useState<string[]>([]);
@@ -22,7 +20,6 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
   const [disabledButtons, setDisabledButtons] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    // Recuperar datos del localStorage
     const storedData = localStorage.getItem('tableData');
     if (storedData) {
       const { names, phoneNumbers, messages, macros } = JSON.parse(storedData);
@@ -31,7 +28,6 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
       setFinalMessages(messages);
       setFinalMacros(macros);
     } else {
-      // Inicializar con props si no hay datos en el localStorage
       setFinalNames(names);
       setFinalPhoneNumbers(phoneNumbers);
       setFinalMessages(messages);
@@ -40,7 +36,6 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
   }, []);
 
   useEffect(() => {
-    // Actualizar el estado cuando cambian las props
     setFinalNames(names);
     setFinalPhoneNumbers(phoneNumbers);
     setFinalMessages(messages);
@@ -48,7 +43,6 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
   }, [names, phoneNumbers, messages, macros]);
 
   useEffect(() => {
-    // Guardar datos en localStorage
     const dataToStore = JSON.stringify({
       names: finalNames,
       phoneNumbers: finalPhoneNumbers,
@@ -59,7 +53,11 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
   }, [finalNames, finalPhoneNumbers, finalMessages, finalMacros]);
 
   const sendWhatsAppMessage = (phoneNumber: string, name: string, message: string, index: number) => {
-    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/.test(navigator.userAgent);
+    const whatsappURL = isMobileDevice 
+      ? `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}` 
+      : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+
     window.open(whatsappURL, '_blank');
     setDisabledButtons(prev => new Set(prev).add(index));
   };
@@ -68,7 +66,7 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
     <div className="relative">
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
-          <Spinner /> {/* Mostrar el spinner cuando está cargando */}
+          <Spinner />
         </div>
       )}
       <Table 
@@ -85,13 +83,11 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
           phoneNumbers={finalPhoneNumbers} 
           messages={finalMessages}  
           macros={finalMacros}
-          onClear={() => { 
-            // Limpiar datos del localStorage si es necesario
-            localStorage.removeItem('tableData');
-          }} 
+          onClear={() => localStorage.removeItem('tableData')} 
         />
       </div>
     </div>
   );
 };
+
 export default TableData;
