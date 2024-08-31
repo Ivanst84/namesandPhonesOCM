@@ -11,7 +11,7 @@ interface ImageProcessorProps {
 const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setNames, setPhoneNumbers }) => {
 
   const preprocessImage = (image: HTMLImageElement): HTMLCanvasElement => {
-    const zoomFactor = 1.1; // Factor de zoom del 110%
+    const zoomFactor = 1.2; // Factor de zoom del 110%
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     

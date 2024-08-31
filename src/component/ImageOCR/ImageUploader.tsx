@@ -1,16 +1,23 @@
 import React from 'react';
 import ImageDropZone from '../ImageDropZOneProps';
-
+import Spinner from '../ui/Spinner';
 interface ImageUploaderProps {
   onDrop: (files: File[]) => void;
   onUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
   selectedImages: string[];
   onRemoveImage: (index: number) => void;
+  loading: boolean; // Agrega esta prop para manejar el estado de carga
+  
 }
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({ onDrop, onUpload, selectedImages, onRemoveImage }) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({ onDrop, onUpload,loading, selectedImages, onRemoveImage }) => {
   return (
     <div className="w-full max-w-6xl mx-auto"> {/* Aumentar el max-width del contenedor */}
+     {loading && (
+        <div className="absolute inset-0 flex items-center justify-center z-50">
+          <Spinner /> {/* Mostrar el spinner cuando está cargando */}
+        </div>
+      )}
       <ImageDropZone onDrop={onDrop} />
       <input 
         type="file" 

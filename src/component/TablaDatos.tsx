@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import ExcelGenerator from './ExelGenerador';
 import Table from './ui/Table';
+import Spinner from './ui/Spinner';
 
 interface DataTableProps {
   names: string[];
   phoneNumbers: string[];
   messages: string[];
   macros: string[];
+  loading: boolean; // Agrega esta prop para manejar el estado de carga
+
   onGenerateExcel: () => void;
+
 }
 
-const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, macros, onGenerateExcel }) => {
+const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, macros,loading, onGenerateExcel }) => {
   const [finalNames, setFinalNames] = useState<string[]>([]);
   const [finalPhoneNumbers, setFinalPhoneNumbers] = useState<string[]>([]);
   const [finalMessages, setFinalMessages] = useState<string[]>([]);
@@ -61,7 +65,12 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
   };
 
   return (
-    <div>
+    <div className="relative">
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
+          <Spinner /> {/* Mostrar el spinner cuando está cargando */}
+        </div>
+      )}
       <Table 
         names={finalNames}
         phoneNumbers={finalPhoneNumbers}
@@ -85,5 +94,4 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
     </div>
   );
 };
-
 export default TableData;

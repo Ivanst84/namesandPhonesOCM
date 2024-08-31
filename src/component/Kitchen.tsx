@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import Title from './Title';
 import ImageUploader from './ImageOCR/ImageUploader';
-import ImageProcessor from './ImageOCR/ImageProcessor';
-import TableData from './TablaDatos';
 import ExcelGenerator from './ExelGenerador';
 import { generateMessage } from '../util/generateMessage';
 import EmojiPickerComponent from './Emojic/EmojiPicker';
-import { FaRegSmile } from 'react-icons/fa'; // Importa el ícono de carita feliz
-
+import TableData from './TablaDatos';
+import ImageProcessor from './ImageOCR/ImageProcessor';
 const extractFirstName = (fullName: string) => {
   const nameParts = fullName.split(' ');
   return nameParts.length > 0 ? nameParts[0] : '';
@@ -20,8 +18,7 @@ const OCRComponent: React.FC = () => {
   const [messageType, setMessageType] = useState<string>('Nuevos');
   const [salesPersonName, setSalesPersonName] = useState<string>('');
   const [customMessage, setCustomMessage] = useState<string>(''); // Estado para el mensaje personalizado
-  const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false); // Estado para mostrar el picker
-
+  const [loading, setLoading] = useState<boolean>(false); // Estado para manejar el spinner
   const firstNames = names.map(extractFirstName);
 
   const salesPersonMessages = firstNames.map(name => 
@@ -51,6 +48,13 @@ const OCRComponent: React.FC = () => {
     setSalesPersonName('');
     setCustomMessage(''); // Limpiar el mensaje personalizado
   };
+    const handleImageUpload = (files: File[]) => {
+    setLoading(true); // Mostrar el spinner
+    const imageUrls = files.map(file => URL.createObjectURL(file));
+    setSelectedImages(prevImages => prevImages.concat(imageUrls));
+    setLoading(false); // Ocultar el spinner cuando se complete
+  };
+
 
   const handleEmojiSelect = (emoji: string) => {
     const newMessage = customMessage + emoji;
@@ -60,7 +64,7 @@ const OCRComponent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
-      <Title mensaje="Espartanos Web App v 0.7 " />
+      <Title mensaje="Espartanos Web App v 0.8 " />
 
       <input 
         type="text" 
@@ -94,22 +98,18 @@ const OCRComponent: React.FC = () => {
           </div>
         </div>
       )}
-
-      <ImageUploader 
-        onDrop={(files) => {
-          const imageUrls = files.map(file => URL.createObjectURL(file));
-          setSelectedImages(prevImages => prevImages.concat(imageUrls));
-        }}
+ <ImageUploader 
+        onDrop={(files) => handleImageUpload(files)}
         onUpload={(event) => {
           if (event.target.files) {
-            const filesArray = Array.from(event.target.files).map(file => URL.createObjectURL(file));
-            setSelectedImages(prevImages => prevImages.concat(filesArray));
+            const filesArray = Array.from(event.target.files);
+            handleImageUpload(filesArray);
           }
         }}
         selectedImages={selectedImages} 
         onRemoveImage={handleRemoveImage}
+        loading={loading} // Pasar el estado de carga
       />
-
       <ImageProcessor 
         selectedImages={selectedImages}
         setNames={setNames}
@@ -118,11 +118,14 @@ const OCRComponent: React.FC = () => {
 
       {firstNames.length > 0 && phoneNumbers.length > 0 && (
         <div className="mt-6 w-full">
+         
           <TableData 
+          
             names={firstNames} 
             phoneNumbers={phoneNumbers}  
             messages={salesPersonMessages} 
             macros={macros}  
+            loading={loading} // Pasar el estado de carga
             onGenerateExcel={handleGenerateExcel} 
           />
         </div>
