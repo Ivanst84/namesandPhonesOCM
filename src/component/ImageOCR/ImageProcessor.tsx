@@ -65,7 +65,7 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
         const preprocessedCanvas = preprocessImage(img);
         const preprocessedImage = preprocessedCanvas.toDataURL('image/png');
 
-        const { data: { text } } = await Tesseract.recognize(preprocessedImage, 'eng', { logger: (m) => console.log(m) });
+        const { data: { text } } = await Tesseract.recognize(preprocessedImage, 'eng', );
 
         // Parse text and filter data
         const { names: parsedNames, phoneNumbers: parsedPhoneNumbers } = filterData(text);
@@ -94,7 +94,7 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
     if (selectedImages.length > 0) {
       processImages();
     }
-  }, [selectedImages]);
+  }, [selectedImages,processImages]);
 
   return (
     <div>

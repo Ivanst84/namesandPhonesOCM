@@ -6,6 +6,7 @@ import { generateMessage } from '../util/generateMessage';
 import EmojiPickerComponent from './Emojic/EmojiPicker';
 import TableData from './TablaDatos';
 import ImageProcessor from './ImageOCR/ImageProcessor';
+import Logo from './Logo';
 const extractFirstName = (fullName: string) => {
   const nameParts = fullName.split(' ');
   return nameParts.length > 0 ? nameParts[0] : '';
@@ -64,6 +65,10 @@ const OCRComponent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
+      
+    <Logo/>
+
+      
       <Title mensaje="Espartanos Web App v 0.8 " />
 
       <input 

@@ -16,7 +16,6 @@ const Table: React.FC<TableProps> = ({ names, phoneNumbers, messages, macros, di
         <th className="border border-gray-600 p-2 hidden md:table-cell">Nombre</th>
         <th className="border border-gray-600 p-2 hidden md:table-cell">Teléfono</th>
         <th className="border border-gray-600 p-2 hidden md:table-cell">Mensaje</th>
-        <th className="border border-gray-600 p-2 hidden md:table-cell">Macro</th>
         <th className="border border-gray-600 p-2 hidden md:table-cell">WhatsApp</th>
         <th className="border border-gray-600 p-2 block md:hidden">Acción</th>
       </tr>
@@ -29,9 +28,7 @@ const Table: React.FC<TableProps> = ({ names, phoneNumbers, messages, macros, di
           <td className="border border-gray-600 p-2 hidden md:table-cell overflow-hidden text-ellipsis whitespace-nowrap" title={messages[index]}>
             {messages[index].length > 50 ? messages[index].substring(0, 50) + '...' : messages[index]}
           </td>
-          <td className="border border-gray-600 p-2 hidden md:table-cell overflow-hidden text-ellipsis whitespace-nowrap" title={macros[index]}>
-            {macros[index].length > 50 ? macros[index].substring(0, 50) + '...' : macros[index]}
-          </td>
+        
           <td className="border border-gray-600 p-2 hidden md:table-cell">
             <button 
               onClick={() => onSendWhatsAppMessage(phoneNumbers[index], name, messages[index], index)}

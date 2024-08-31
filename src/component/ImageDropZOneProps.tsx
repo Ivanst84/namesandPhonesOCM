@@ -44,7 +44,7 @@ const ImageDropZone: React.FC<ImageDropZoneProps> = ({ onDrop }) => {
     return () => {
       document.removeEventListener('paste', handlePaste);
     };
-  }, []);
+  }, [handlePaste]);
 
   return (
     <div
