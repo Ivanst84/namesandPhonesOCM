@@ -1,3 +1,5 @@
+// componente para arrastra y soltar imagnes
+// Se añade la funcionalidad de pegar imágenes desde el portapapeles
 import React, { useState, useEffect } from 'react';
 
 interface ImageDropZoneProps {
