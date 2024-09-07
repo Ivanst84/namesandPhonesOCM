@@ -70,7 +70,7 @@ const OCRComponent: React.FC = () => {
     <Logo/>
 
       
-      <Title mensaje="Espartanos Web App v 0.8 " />
+      <Title mensaje="Espartanos Web App v 1.0 Beta " />
 
       <input 
         type="text" 
