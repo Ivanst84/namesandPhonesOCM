@@ -11,7 +11,9 @@ export default async function App() {
   if (!session) {
     redirect('/auth/signin');
   }
-
+  if (session.user.role === 'ADMIN') {
+    redirect('/admin/dashboard');
+  }
   return (
     <div>
       <OCRComponent />
