@@ -1,0 +1,30 @@
+{
+  "node": {
+    "c9a6aaf7ef1ab06e996dd20d3de83f1b550036ca": {
+      "workers": {
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fivan%2Fhouse%2Fsrc%2Factions%2FgetUsers.ts%22%2C%5B%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    },
+    "9a6964dbeb479e4cdda0bcb343611c640b3f7fbf": {
+      "workers": {
+        "app/admin/dashboard/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fivan%2Fhouse%2Fsrc%2Factions%2FnewUsers.ts%22%2C%5B%22newUsers%22%2C%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/admin/dashboard/page": "action-browser"
+      }
+    },
+    "cf5d71da9a4a8661ed9b3714778ee8967c857871": {
+      "workers": {
+        "app/admin/dashboard/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fivan%2Fhouse%2Fsrc%2Factions%2FnewUsers.ts%22%2C%5B%22newUsers%22%2C%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/admin/dashboard/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "IzKI7LCGXjA9hb26POk3i92M3I+K161gU3mpWRcg1Ow="
+}
