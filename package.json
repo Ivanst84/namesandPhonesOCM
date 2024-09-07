@@ -9,7 +9,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/next-auth": "^3.15.0",
     "@types/node": "^16.18.105",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
@@ -18,6 +17,7 @@
     "jimp": "^0.22.12",
     "next": "^14.2.8",
     "next-auth": "^4.24.7",
+    "@types/next-auth": "^4.0.0", 
     "prisma": "^5.19.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -32,19 +32,13 @@
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "seed": "ts-node src/seed/seed-database.ts"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -60,7 +54,12 @@
   },
   "devDependencies": {
     "@types/emoji-mart": "^3.0.14",
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "@typescript-eslint/parser": "^8.4.0",
     "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.8",
+    "eslint-plugin-react": "^7.35.2",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10"
   }

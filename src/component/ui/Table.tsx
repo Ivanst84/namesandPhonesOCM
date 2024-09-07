@@ -9,7 +9,8 @@ interface TableProps {
   onSendWhatsAppMessage: (phoneNumber: string, name: string, message: string, index: number) => void;
 }
 
-const Table: React.FC<TableProps> = ({ names, phoneNumbers, messages, macros, disabledButtons, onSendWhatsAppMessage }) => (
+const Table: React.FC<TableProps> = ({ names, phoneNumbers, messages,
+  disabledButtons, onSendWhatsAppMessage }) => (
   <table className="w-full text-left border-collapse border border-gray-700">
     <thead>
       <tr className="bg-gray-800">

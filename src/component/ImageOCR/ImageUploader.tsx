@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import ImageDropZone from '../ImageDropZOneProps';
 import Spinner from '../ui/Spinner';
 interface ImageUploaderProps {
@@ -32,9 +33,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onDrop, onUpload,loading,
             key={index} 
             className="relative group w-full h-80 overflow-hidden rounded border border-gray-700 hover:border-gray-500" 
           >
-            <img 
+            <Image
               src={image} 
               alt={`Uploaded ${index}`} 
+              width={500}  // Ajusta el ancho según tus necesidades
+              height={500}
               className="w-full h-full object-contain transition-transform duration-300 transform grayscale"
             />
             <button 

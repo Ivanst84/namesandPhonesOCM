@@ -1,27 +1,19 @@
-import { getUsers } from '@/actions/getUsers';
-import OCRComponent from '@/component/Kitchen';
-import { getServerSession } from 'next-auth';
+// src/app/page.tsx
 
+import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
-import { authOptions } from './api/auth/[...nextauth]/route';
-
+import { authOptions } from '@/lib/authOptions'; // Ahora importamos correctamente desde el archivo lib
+import OCRComponent from '@/component/Kitchen';
 
 export default async function App() {
   const session = await getServerSession(authOptions);
-  console.log("esto es el session", session); 
+  
   if (!session) {
-
-    redirect('/auth/signin'); // Redirige al login si no hay sesión
+    redirect('/auth/signin');
   }
- 
-  if (session.user.role == 'ADMIN') {
-    redirect('/admin/dashboard'); // Redirige al home si no es admin
-  }
-
-  const users = await getUsers();
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+    <div>
       <OCRComponent />
     </div>
   );

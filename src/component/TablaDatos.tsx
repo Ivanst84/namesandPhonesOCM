@@ -9,25 +9,21 @@ interface DataTableProps {
   messages: string[];
   macros: string[];
   loading: boolean;
-  onGenerateExcel: () => void;
+  onGenerateExcel: () => void; // Agregamos la propiedad `onGenerateExcel`
+
 }
 
-const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, macros, loading, onGenerateExcel }) => {
-  const [finalNames, setFinalNames] = useState<string[]>([]);
-  const [finalPhoneNumbers, setFinalPhoneNumbers] = useState<string[]>([]);
-  const [finalMessages, setFinalMessages] = useState<string[]>([]);
-  const [finalMacros, setFinalMacros] = useState<string[]>([]);
+const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, macros, loading }) => {
+  const [finalNames, setFinalNames] = useState<string[]>(names);
+  const [finalPhoneNumbers, setFinalPhoneNumbers] = useState<string[]>(phoneNumbers);
+  const [finalMessages, setFinalMessages] = useState<string[]>(messages);
+  const [finalMacros, setFinalMacros] = useState<string[]>(macros);
   const [disabledButtons, setDisabledButtons] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     const storedData = localStorage.getItem('tableData');
     if (storedData) {
       const { names, phoneNumbers, messages, macros } = JSON.parse(storedData);
-      setFinalNames(names);
-      setFinalPhoneNumbers(phoneNumbers);
-      setFinalMessages(messages);
-      setFinalMacros(macros);
-    } else {
       setFinalNames(names);
       setFinalPhoneNumbers(phoneNumbers);
       setFinalMessages(messages);
@@ -91,4 +87,3 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
 };
 
 export default TableData;
-

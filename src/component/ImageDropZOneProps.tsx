@@ -25,26 +25,26 @@ const ImageDropZone: React.FC<ImageDropZoneProps> = ({ onDrop }) => {
     event.preventDefault();
     setIsDragging(false);
   };
-
-  const handlePaste = (event: ClipboardEvent) => {
-    const items = event.clipboardData?.items; // Añadido el operador de encadenamiento opcional
-    if (items) {
-      const files = Array.from(items).filter(item => item.kind === 'file').map(item => item.getAsFile()).filter((file): file is File => file !== null);
-      if (files.length > 0) {
-        onDrop(files);
-      }
-    }
-  };
-
+  
   useEffect(() => {
     // Agregar el manejador de eventos `paste` cuando el componente se monte
+    
+      const handlePaste = (event: ClipboardEvent) => {
+        const items = event.clipboardData?.items; // Añadido el operador de encadenamiento opcional
+        if (items) {
+          const files = Array.from(items).filter(item => item.kind === 'file').map(item => item.getAsFile()).filter((file): file is File => file !== null);
+          if (files.length > 0) {
+            onDrop(files);
+          }
+        }
+      };
     document.addEventListener('paste', handlePaste);
 
     // Limpiar el manejador de eventos cuando el componente se desmonte
     return () => {
       document.removeEventListener('paste', handlePaste);
     };
-  }, [handlePaste]);
+  }, [onDrop]);
 
   return (
     <div

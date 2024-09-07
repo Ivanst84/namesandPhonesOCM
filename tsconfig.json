@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -12,27 +16,27 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "forceConsistentCasingInFileNames": true,
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "forceConsistentCasingInFileNames": true
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "types/**/*.ts"  // Incluir la carpeta de tipos personalizada
-    
+    "src/**/*",
+    "src/index.tsx" // Asegúrate de incluir explícitamente index.tsx
   ],
-  "exclude": ["node_modules"],
-  "typeRoots": [
-    "/home/ivan/house/types",  // Ruta a tu carpeta types
-    "./node_modules/@types"
+  "exclude": [
+    "node_modules"
   ]
 }

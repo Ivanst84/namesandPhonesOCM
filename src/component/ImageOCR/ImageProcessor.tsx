@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import Tesseract from 'tesseract.js';
 import { filterData } from '../../util/filterData';
 
@@ -49,7 +49,7 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
     return canvas;
   };
 
-  const processImages = async () => {
+  const processImages = useCallback(async () => {
     const allNames: string[] = [];
     const allPhoneNumbers: string[] = [];
 
@@ -88,13 +88,13 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
 
     setNames(finalNames);
     setPhoneNumbers(finalPhoneNumbers);
-  };
+  }, [selectedImages, setNames, setPhoneNumbers]);
 
   useEffect(() => {
     if (selectedImages.length > 0) {
       processImages();
     }
-  }, [selectedImages,processImages]);
+  }, [selectedImages, processImages]);
 
   return (
     <div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface LogoProps {
   className?: string; // Permite añadir clases personalizadas si es necesario
@@ -15,10 +16,12 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
 
   return (
     <div className={`flex justify-center mb-4 ${className}`}>
-      <img
+      <Image
         src="/espartano.png" // La ruta al archivo PNG en la carpeta public
         alt="Logo"
-        className={`w-24 h-24 transform transition-transform transition-opacity duration-1000 ${isVisible ? 'scale-100 opacity-100' : 'scale-150 opacity-0'} shadow-neon`}
+        width={96}  // Ajusta el tamaño en píxeles
+        height={96} // Ajusta el tamaño en píxeles
+        className={`transform transition-transform transition-opacity duration-1000 ${isVisible ? 'scale-100 opacity-100' : 'scale-150 opacity-0'} shadow-neon`}
       />
     </div>
   );

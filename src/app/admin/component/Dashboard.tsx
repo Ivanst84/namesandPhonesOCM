@@ -3,8 +3,6 @@
 import { toast } from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { newUsers } from '@/actions/newUsers'; // Asegúrate de importar correctamente tu action
-import type { User } from '@/interfaces/user.interface';
-import { signOut } from 'next-auth/react';
 
 type FormInputs = {
   name: string;
@@ -13,9 +11,6 @@ type FormInputs = {
 
 };
 
-interface Props {
-  user: User;
-}
 
 const Dashboard = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>();
@@ -84,13 +79,20 @@ const Dashboard = () => {
           >
             Registrar Usuario
           </button>
-          <button
-          className="mt-4 w-full bg-red-600 text-white p-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
-          onClick={() => signOut({ callbackUrl: '/auth/signin' })}
-        >
-          Cerrar Sesión
-        </button>
         </form>
+        <button
+  className="mt-4 w-full bg-red-600 text-white p-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+  onClick={async () => {
+    try {
+      window.location.href = '/auth/signin'; // Redirige manualmente a la página de inicio de sesión
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+      toast.error('Error al cerrar sesión');
+    }
+  }}
+>
+  Cerrar Sesión
+</button>
       </div>
     </div>
   );
