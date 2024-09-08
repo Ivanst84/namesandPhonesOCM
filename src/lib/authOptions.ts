@@ -55,6 +55,8 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error',
+    signOut: '/auth/signin',  // Aquí defines la ruta de redirección después del logout
+
   },
   debug: true,
 };

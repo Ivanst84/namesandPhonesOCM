@@ -86,7 +86,7 @@ const Dashboard = () => {
     try {
       window.location.href = '/auth/signin'; // Redirige manualmente a la página de inicio de sesión
     } catch (error) {
-      console.error('Error al cerrar sesión:', error);
+    
       toast.error('Error al cerrar sesión');
     }
   }}

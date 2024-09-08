@@ -590,6 +590,12 @@ video {
 .top-2 {
   top: 0.5rem;
 }
+.right-4 {
+  right: 1rem;
+}
+.top-4 {
+  top: 1rem;
+}
 .z-50 {
   z-index: 50;
 }
@@ -778,6 +784,10 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;

@@ -16,10 +16,10 @@ const randomBrandName = () => {
 // Función para generar introducciones aleatorias
 const randomIntroduction = (name: string, salesPersonName: string) => {
   const introductions = [
-    `🌟 ¡Hola ${name}! 🌟\nTe saluda ${salesPersonName || `un asesor de ${randomBrandName()}`},`,
-    `🎉 ¡Qué tal, ${name}! 🎉\nSoy ${salesPersonName || `un representante de ${randomBrandName()}`},`,
-    `📢 ¡Saludos, ${name}! 📢\nAquí ${salesPersonName || `desde ${randomBrandName()}`},`,
-    `✨ ¡Hola ${name}! ✨\nMi nombre es ${salesPersonName || `y soy parte de ${randomBrandName()}`},`,
+    `🌟 ¡Buen día ${name}! 🌟\nTe saluda ${salesPersonName || `un asesor de ${randomBrandName()}`},`,
+    `🎉 ¡Qué tal, ${name}! \nSoy ${salesPersonName || `un representante de ${randomBrandName()}`},`,
+    ` ¡Saludos, ${name}! 📢\nAquí ${salesPersonName || `desde ${randomBrandName()}`},`,
+    `✨ ¡Hola! ${name}! ✨\nMi nombre es ${salesPersonName || `y soy parte de ${randomBrandName()}`},`,
   ];
   return introductions[Math.floor(Math.random() * introductions.length)];
 };
@@ -33,7 +33,7 @@ export const generateMessage = (
 ): string => {
   // Si el mensaje es personalizado, lo retornamos con nombre y asesor
   if (messageType === 'Personalizado') {
-    return `🌟 ¡Hola ${name}! 🌟\n${customMessage}\n\nAtentamente, ${salesPersonName || `Asesor de ${randomBrandName()}`}`;
+    return ` ¡Hola ${name}! 🌟\n${customMessage}\n\nAtentamente, ${salesPersonName || `Asesor de ${randomBrandName()}`}`;
   }
 
   // Paquetes de precios para los mensajes predefinidos
@@ -69,7 +69,7 @@ export const generateMessage = (
   // Mensajes predefinidos para Clientes y Nuevos
   const clienteMessages = [
     `${randomIntroduction(name, salesPersonName)}\n\nActualmente, sabemos que estás pagando el precio regular. ¡Pero tenemos promociones para ti! Aquí te dejo algunas opciones:\n\n${shuffledClientesPackages}\n\n${randomDespedida()}`,
-    `${randomIntroduction(name, salesPersonName)}\n\nHemos revisado tu cuenta y podemos ofrecerte estas promociones:\n\n${shuffledClientesPackages}\n\n${randomDespedida()}`,
+    `${randomIntroduction(name, salesPersonName)}\n\nHemos revisado tu cuenta y podemos ofrecerte estas nuevas promociones!:\n\n${shuffledClientesPackages}\n\n${randomDespedida()}`,
     `${randomIntroduction(name, salesPersonName)}\n\n¡No te pierdas nuestras nuevas ofertas! Aquí te dejo las opciones disponibles:\n\n${shuffledClientesPackages}\n\n${randomDespedida()}`,
   ];
 

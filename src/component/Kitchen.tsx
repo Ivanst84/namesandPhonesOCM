@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import Title from './Title';
 import ImageUploader from './ImageOCR/ImageUploader';
-import ExcelGenerator from './ExelGenerador';
 import { generateMessage } from '../util/generateMessage';
 import EmojiPickerComponent from './Emojic/EmojiPicker';
 import TableData from './TablaDatos';
 import ImageProcessor from './ImageOCR/ImageProcessor';
 import Logo from './Logo';
+import { signOut } from 'next-auth/react';
+import router from 'next/router';
 const extractFirstName = (fullName: string) => {
   const nameParts = fullName.split(' ');
   return nameParts.length > 0 ? nameParts[0] : '';
@@ -66,7 +67,16 @@ const OCRComponent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
-      
+     <button
+  onClick={async () => {
+    await signOut();
+    window.location.href = '/auth/signin';  // Usar window.location para redirigir en un Client Component
+  }}
+  className="absolute top-4 right-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition-colors"
+>
+  Logout
+</button>
+
     <Logo/>
 
       
@@ -137,13 +147,6 @@ const OCRComponent: React.FC = () => {
         </div>
       )}
 
-      <ExcelGenerator 
-        names={firstNames} 
-        phoneNumbers={phoneNumbers} 
-        messages={salesPersonMessages}  
-        macros={macros}
-        onClear={clearData} 
-      />
     </div>
   );
 };
