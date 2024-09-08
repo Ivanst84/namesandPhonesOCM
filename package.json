@@ -33,10 +33,10 @@
   "type": "commonjs",
   "scripts": {
     "dev": "next dev",
+    "prisma": "npx prisma migrate deploy && npx prisma generate",
     "build": "npm run prisma && next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma": "npx prisma migrate deploy && npx prisma generate",
     "seed": "ts-node src/seed/seed-database.ts"
   },
   "browserslist": {
