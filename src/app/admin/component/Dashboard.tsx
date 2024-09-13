@@ -85,7 +85,7 @@ const Dashboard = () => {
   onClick={async () => {
     try {
       window.location.href = '/auth/signin'; // Redirige manualmente a la página de inicio de sesión
-    } catch (error) {
+    } catch  {
     
       toast.error('Error al cerrar sesión');
     }

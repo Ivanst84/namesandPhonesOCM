@@ -1,5 +1,1 @@
-{
-  "node": {},
-  "edge": {},
-  "encryptionKey": "dRWio3YQSEqXR7ebtJ8t88W/Z2bL908PAI/iY1gCPLo="
-}
+{"node":{"9a6964dbeb479e4cdda0bcb343611c640b3f7fbf":{"workers":{"app/admin/dashboard/page":"78795"},"layer":{"app/admin/dashboard/page":"action-browser"}},"cf5d71da9a4a8661ed9b3714778ee8967c857871":{"workers":{"app/admin/dashboard/page":"78795"},"layer":{"app/admin/dashboard/page":"action-browser"}}},"edge":{},"encryptionKey":"ZPMGfusns5qIsTaTamF7/tBxZdkVKdZbgcoP1Psjdn0="}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Table from './ui/Table';
 import Spinner from './ui/Spinner';
 import ExcelGenerator from './ExelGenerador';
+import TxtGenerator from './TxtGenerator';
 
 interface DataTableProps {
   names: string[];
@@ -9,33 +10,38 @@ interface DataTableProps {
   messages: string[];
   macros: string[];
   loading: boolean;
-  onGenerateExcel: () => void; // Agregamos la propiedad `onGenerateExcel`
-
+  onGenerateExcel: () => void;  
 }
 
 const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, macros, loading }) => {
-  const [finalNames, setFinalNames] = useState<string[]>(names);
-  const [finalPhoneNumbers, setFinalPhoneNumbers] = useState<string[]>(phoneNumbers);
-  const [finalMessages, setFinalMessages] = useState<string[]>(messages);
-  const [finalMacros, setFinalMacros] = useState<string[]>(macros);
+  const [finalNames, setFinalNames] = useState<string[]>([]);
+  const [finalPhoneNumbers, setFinalPhoneNumbers] = useState<string[]>([]);
+  const [finalMessages, setFinalMessages] = useState<string[]>([]);
+  const [finalMacros, setFinalMacros] = useState<string[]>([]);
   const [disabledButtons, setDisabledButtons] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    const storedData = localStorage.getItem('tableData');
-    if (storedData) {
-      const { names, phoneNumbers, messages, macros } = JSON.parse(storedData);
-      setFinalNames(names);
-      setFinalPhoneNumbers(phoneNumbers);
-      setFinalMessages(messages);
-      setFinalMacros(macros);
-    }
-  }, []);
+    // Filtrar duplicados y almacenar el resultado
+    const uniquePhoneNumbers = new Set<string>();
+    const filteredNames: string[] = [];
+    const filteredPhoneNumbers: string[] = [];
+    const filteredMessages: string[] = [];
+    const filteredMacros: string[] = [];
 
-  useEffect(() => {
-    setFinalNames(names);
-    setFinalPhoneNumbers(phoneNumbers);
-    setFinalMessages(messages);
-    setFinalMacros(macros);
+    phoneNumbers.forEach((phoneNumber, index) => {
+      if (!uniquePhoneNumbers.has(phoneNumber)) {
+        uniquePhoneNumbers.add(phoneNumber);
+        filteredNames.push(names[index]);
+        filteredPhoneNumbers.push(phoneNumber);
+        filteredMessages.push(messages[index]);
+        filteredMacros.push(macros[index]);
+      }
+    });
+
+    setFinalNames(filteredNames);
+    setFinalPhoneNumbers(filteredPhoneNumbers);
+    setFinalMessages(filteredMessages);
+    setFinalMacros(filteredMacros);
   }, [names, phoneNumbers, messages, macros]);
 
   useEffect(() => {
@@ -73,13 +79,17 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
         disabledButtons={disabledButtons}
         onSendWhatsAppMessage={sendWhatsAppMessage}
       />
-      <div className="mt-6">
-        <ExcelGenerator 
+<div className="mt-6 flex space-x-4">
+<ExcelGenerator 
           names={finalNames} 
           phoneNumbers={finalPhoneNumbers} 
           messages={finalMessages}  
           macros={finalMacros}
           onClear={() => localStorage.removeItem('tableData')} 
+        />
+        <TxtGenerator
+          phoneNumbers={finalPhoneNumbers}
+          onClear={() => localStorage.removeItem('tableData')}
         />
       </div>
     </div>

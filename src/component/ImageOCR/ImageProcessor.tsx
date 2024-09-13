@@ -9,7 +9,18 @@ interface ImageProcessorProps {
 }
 
 const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setNames, setPhoneNumbers }) => {
-
+  const formatPhoneNumber = (phoneNumber: string) => {
+    const countryCode = "+52";
+    const mobilePrefix = "1";
+    
+    // Si el número no incluye el código de país y el prefijo móvil, agrégalo.
+    if (!phoneNumber.startsWith(countryCode)) {
+      return `${countryCode} ${mobilePrefix} ${phoneNumber}`;
+    }
+    
+    // Devuelve el número sin modificación si ya está en el formato correcto
+    return phoneNumber;
+  };
   const preprocessImage = (image: HTMLImageElement): HTMLCanvasElement => {
     const zoomFactor = 1.2; // Factor de zoom del 110%
     const canvas = document.createElement('canvas');
@@ -69,9 +80,10 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
 
         // Parse text and filter data
         const { names: parsedNames, phoneNumbers: parsedPhoneNumbers } = filterData(text);
+        const formattedPhoneNumbers = parsedPhoneNumbers.map(formatPhoneNumber);
 
         allNames.push(...parsedNames);
-        allPhoneNumbers.push(...parsedPhoneNumbers);
+        allPhoneNumbers.push(...formattedPhoneNumbers);
       } catch (error) {
         console.error('Error durante el reconocimiento de texto:', error);
       }

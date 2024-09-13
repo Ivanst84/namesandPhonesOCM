@@ -11,51 +11,57 @@ interface TableProps {
 
 const Table: React.FC<TableProps> = ({ names, phoneNumbers, messages,
   disabledButtons, onSendWhatsAppMessage }) => (
-  <table className="w-full text-left border-collapse border border-gray-700">
-    <thead>
-      <tr className="bg-gray-800">
-        <th className="border border-gray-600 p-2 hidden md:table-cell">Nombre</th>
-        <th className="border border-gray-600 p-2 hidden md:table-cell">Teléfono</th>
-        <th className="border border-gray-600 p-2 hidden md:table-cell">Mensaje</th>
-        <th className="border border-gray-600 p-2 hidden md:table-cell">WhatsApp</th>
-        <th className="border border-gray-600 p-2 block md:hidden">Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      {names.map((name, index) => (
-        <tr key={index} className={index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-700'}>
-          <td className="border border-gray-600 p-2 hidden md:table-cell">{name}</td>
-          <td className="border border-gray-600 p-2 hidden md:table-cell">{phoneNumbers[index]}</td>
-          <td className="border border-gray-600 p-2 hidden md:table-cell overflow-hidden text-ellipsis whitespace-nowrap" title={messages[index]}>
-            {messages[index].length > 50 ? messages[index].substring(0, 50) + '...' : messages[index]}
-          </td>
-        
-          <td className="border border-gray-600 p-2 hidden md:table-cell">
-            <button 
-              onClick={() => onSendWhatsAppMessage(phoneNumbers[index], name, messages[index], index)}
-              className={`px-2 py-1 ${disabledButtons.has(index) ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-500 hover:bg-green-400'} text-white rounded transition`}
-              disabled={disabledButtons.has(index)}
-            >
-              {disabledButtons.has(index) ? 'Enviado' : 'Enviar WhatsApp'}
-            </button>
-          </td>
-          <td className="border border-gray-600 p-2 block md:hidden">
-            <div className="flex flex-col">
-              <span className="block mb-1">{name}</span>
-              <span className="block mb-1">{phoneNumbers[index]}</span>
+  <div className="overflow-x-auto">
+    <table className="w-full text-left border-collapse">
+      <thead>
+      <tr className="bg-gray-200 text-gray-800">
+      <th className="p-3 hidden md:table-cell">Nombre</th>
+          <th className="p-3 hidden md:table-cell">Teléfono</th>
+          <th className="p-3 hidden md:table-cell">Mensaje</th>
+          <th className="p-3 hidden md:table-cell">WhatsApp</th>
+          <th className="p-3 block md:hidden">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {names.map((name, index) => (
+          <tr 
+            key={index} 
+            className={`transition hover:bg-gray-200 text-gray-800 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
+          >
+            <td className="p-3 hidden md:table-cell ">{name}</td>
+            <td className="p-3 hidden md:table-cell">{phoneNumbers[index]}</td>
+            <td className="p-3 hidden md:table-cell overflow-hidden text-ellipsis whitespace-nowrap" title={messages[index]}>
+              {messages[index].length > 50 ? messages[index].substring(0, 50) + '...' : messages[index]}
+            </td>
+          
+            <td className="p-3 hidden md:table-cell">
               <button 
                 onClick={() => onSendWhatsAppMessage(phoneNumbers[index], name, messages[index], index)}
-                className={`px-2 py-1 ${disabledButtons.has(index) ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-500 hover:bg-green-400'} text-white rounded transition`}
+                className={`px-4 py-2 ${disabledButtons.has(index) ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-400'} text-white rounded-full transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-300`}
                 disabled={disabledButtons.has(index)}
               >
                 {disabledButtons.has(index) ? 'Enviado' : 'Enviar WhatsApp'}
               </button>
-            </div>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
+            </td>
+            
+            <td className="p-3 block md:hidden">
+              <div className="flex flex-col space-y-2">
+                <span className="block text-sm">{name}</span>
+                <span className="block text-sm">{phoneNumbers[index]}</span>
+                <button 
+                  onClick={() => onSendWhatsAppMessage(phoneNumbers[index], name, messages[index], index)}
+                  className={`px-4 py-2 ${disabledButtons.has(index) ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-400'} text-white rounded-full transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-300`}
+                  disabled={disabledButtons.has(index)}
+                >
+                  {disabledButtons.has(index) ? 'Enviado' : 'Enviar WhatsApp'}
+                </button>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 );
 
 export default Table;
