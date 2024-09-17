@@ -74,7 +74,7 @@ const OCRComponent: React.FC = () => {
       <Logo />
   
       {/* Título */}
-      <Title mensaje="Espartanos Web App v 1.0 Beta" />
+      <Title mensaje="Espartanos Web App v 1.1 Beta" />
   
       {/* Input para el nombre */}
       <input 

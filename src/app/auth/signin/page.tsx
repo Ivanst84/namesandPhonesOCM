@@ -2,6 +2,7 @@
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation'; // Importa el hook de enrutamiento
 import { FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -12,12 +13,10 @@ export default function SignIn() {
     e.preventDefault();
     const res = await signIn('credentials', { email, password, redirect: false });
   
-    console.log("esto es el res", res); // Verifica el valor de res
   
     if (res?.error) {
-      console.error('Error:', res.error);
+      toast.error('Error  al autentificar'); // Prueba directa del toast de error
     } else {
-      console.log('Login successful');
       router.push('/'); // Redirige a la página principal
     }
   };
