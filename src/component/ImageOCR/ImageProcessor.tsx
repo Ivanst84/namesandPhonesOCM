@@ -1,6 +1,8 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import Tesseract from 'tesseract.js';
 import { filterData } from '../../util/filterData';
+import toast from 'react-hot-toast';
+import Spinner from '../ui/Spinner';
 
 interface ImageProcessorProps {
   selectedImages: string[];
@@ -9,6 +11,8 @@ interface ImageProcessorProps {
 }
 
 const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setNames, setPhoneNumbers }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const formatPhoneNumber = (phoneNumber: string) => {
     const countryCode = "+52";
     const mobilePrefix = "1";
@@ -61,6 +65,10 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
   };
 
   const processImages = useCallback(async () => {
+    if (selectedImages.length === 0) return;
+
+    setIsLoading(true); // Inicia la carga
+
     const allNames: string[] = [];
     const allPhoneNumbers: string[] = [];
 
@@ -81,13 +89,22 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
         // Parse text and filter data
         const { names: parsedNames, phoneNumbers: parsedPhoneNumbers } = filterData(text);
         const formattedPhoneNumbers = parsedPhoneNumbers.map(formatPhoneNumber);
+        
 
         allNames.push(...parsedNames);
         allPhoneNumbers.push(...formattedPhoneNumbers);
+        if(parsedNames.length ===0 && parsedPhoneNumbers.length ===0){
+        
+          toast('No se encontraron nombres o números de teléfono en la imagen');
+          }
+      
+      
       } catch (error) {
-        console.error('Error durante el reconocimiento de texto:', error);
+        console.error('Error al procesar la imagen:', error);} {
+        setIsLoading(false); // Finaliza la carga, incluso si ocurre un error
+
       }
-    }
+    };
 
     // Ensure arrays are the same length
     const maxLength = Math.max(allNames.length, allPhoneNumbers.length);
@@ -110,8 +127,10 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
 
   return (
     <div>
-      {/* Opcional: Mostrar un mensaje o el progreso del procesamiento */}
-    </div>
+          {isLoading && <Spinner />}
+
+   
+       </div>
   );
 };
 
