@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.273",
     "@types/emoji-mart": "^3.0.14",
     "@typescript-eslint/eslint-plugin": "^8.4.0",
     "@typescript-eslint/parser": "^8.4.0",

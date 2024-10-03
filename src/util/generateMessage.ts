@@ -48,7 +48,7 @@ export const generateMessage = (
   const packagesNuevos = [
     `📡 Solo Internet: 100 megas por $369`,
     `📺 Internet + TV: 80 megas por $489`,
-    `📡 100 megas de Internet + caja smart y100 canales por $519`,
+    `📡 100 megas de Internet + caja smart y 100 canales por $519`,
     `📶internet +Netflix + streamings + caja smart y cable por $679`,
 
   ];

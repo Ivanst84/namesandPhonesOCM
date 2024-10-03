@@ -52,6 +52,16 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
       macros: finalMacros,
     });
     localStorage.setItem('tableData', dataToStore);
+    chrome.runtime.sendMessage({
+      action: 'enviarNumeros',
+      nombres: finalNames,
+      numeros: finalPhoneNumbers,
+      mensajes: finalMessages,
+    }, (response) => {
+      console.log('Respuesta de la extensión:', response);
+    });
+
+
   }, [finalNames, finalPhoneNumbers, finalMessages, finalMacros]);
 
   const sendWhatsAppMessage = (phoneNumber: string, name: string, message: string, index: number) => {
