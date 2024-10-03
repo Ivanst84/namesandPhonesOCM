@@ -51,17 +51,27 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
       messages: finalMessages,
       macros: finalMacros,
     });
+    console.log('useEffect ejecutado', finalNames, finalPhoneNumbers, finalMessages);
+
     localStorage.setItem('tableData', dataToStore);
-    chrome.runtime.sendMessage({
-      action: 'enviarNumeros',
-      nombres: finalNames,
-      numeros: finalPhoneNumbers,
-      mensajes: finalMessages,
-    }, (response) => {
-      console.log('Respuesta de la extensión:', response);
-    });
-
-
+    try{
+    if (typeof chrome !== 'undefined' && chrome.runtime) {
+      console.log('Guardando datos en chrome.storage');
+  
+      // Guardar los datos en chrome.storage
+      chrome.runtime.sendMessage({
+        nombres: finalNames,
+        numeros: finalPhoneNumbers,
+        mensajes: finalMessages,
+      }, (response) => {
+        console.log('Datos guardados correctamente', response);
+      });
+    } else {
+      throw new Error("API de Chrome no disponible.");
+    }
+  } catch (error:any) {
+    console.error("Error al enviar mensaje a la extensión:", error.message);
+  }
   }, [finalNames, finalPhoneNumbers, finalMessages, finalMacros]);
 
   const sendWhatsAppMessage = (phoneNumber: string, name: string, message: string, index: number) => {

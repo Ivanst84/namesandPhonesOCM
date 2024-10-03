@@ -31,7 +31,7 @@ const Table: React.FC<TableProps> = ({ names, phoneNumbers, messages,
             <td className="p-3 hidden md:table-cell ">{name}</td>
             <td className="p-3 hidden md:table-cell">{phoneNumbers[index]}</td>
             <td className="p-3 hidden md:table-cell overflow-hidden text-ellipsis whitespace-nowrap" title={messages[index]}>
-              {messages[index].length > 50 ? messages[index].substring(0, 50) + '...' : messages[index]}
+              {messages[index].length > 450 ? messages[index].substring(0, 450) + '...' : messages[index]}
             </td>
           
             <td className="p-3 hidden md:table-cell">
