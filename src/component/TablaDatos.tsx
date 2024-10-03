@@ -52,27 +52,32 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
       macros: finalMacros,
     });
     console.log('useEffect ejecutado', finalNames, finalPhoneNumbers, finalMessages);
-
-    localStorage.setItem('tableData', dataToStore);
-    try{
-    if (typeof chrome !== 'undefined' && chrome.runtime) {
-      console.log('Guardando datos en chrome.storage');
   
-      // Guardar los datos en chrome.storage
-      chrome.runtime.sendMessage({
-        nombres: finalNames,
-        numeros: finalPhoneNumbers,
-        mensajes: finalMessages,
-      }, (response) => {
-        console.log('Datos guardados correctamente', response);
-      });
-    } else {
-      throw new Error("API de Chrome no disponible.");
+    localStorage.setItem('tableData', dataToStore);
+  
+    try {
+      if (typeof chrome !== 'undefined' && chrome.runtime) {
+        console.log('Guardando datos en chrome.storage');
+  
+        // Guardar los datos en chrome.storage
+        chrome.runtime.sendMessage({
+          nombres: finalNames,
+          numeros: finalPhoneNumbers,
+          mensajes: finalMessages,
+        }, (response) => {
+          console.log('Datos guardados correctamente', response);
+        });
+      } else {
+        console.error("API de Chrome no disponible en producción. Guardando en localStorage.");
+        // Guardar los datos en localStorage como fallback
+        localStorage.setItem('fallbackData', dataToStore);
+      }
+    } catch (error) {
+      console.error("Error al enviar mensaje a la extensión:", error);
     }
-  } catch (error:any) {
-    console.error("Error al enviar mensaje a la extensión:", error.message);
-  }
   }, [finalNames, finalPhoneNumbers, finalMessages, finalMacros]);
+  
+  
 
   const sendWhatsAppMessage = (phoneNumber: string, name: string, message: string, index: number) => {
     const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/.test(navigator.userAgent);
