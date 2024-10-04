@@ -41,7 +41,7 @@ export const generateMessage = (
     `📶 Internet 100 megas: $369`,
     `📺 Internet 80 megas + Cable: $489`,
     `📡 Internet 100 megas + 100 canales: $519`,
-    `📶internet +Netflix + streamings + caja smart y cable por $679`,
+    `📶internet +Netflix + caja smart y cable por $578`,
 
   ];
 
@@ -49,7 +49,7 @@ export const generateMessage = (
     `📡 Solo Internet: 100 megas por $369`,
     `📺 Internet + TV: 80 megas por $489`,
     `📡 100 megas de Internet + caja smart y 100 canales por $519`,
-    `📶internet +Netflix + streamings + caja smart y cable por $679`,
+    `📶internet + Netflix  + caja smart y cable por $578`,
 
   ];
 
@@ -68,8 +68,8 @@ export const generateMessage = (
 
   // Mensajes predefinidos para Clientes y Nuevos
   const clienteMessages = [
-    `${randomIntroduction(name, salesPersonName)}\n\nActualmente, sabemos que estás pagando el precio regular. ¡Pero tenemos promociones para ti! Aquí te dejo algunas opciones:\n\n${shuffledClientesPackages}\n\n${randomDespedida()}`,
-    `${randomIntroduction(name, salesPersonName)}\n\nHemos revisado tu cuenta y podemos ofrecerte estas nuevas promociones!:\n\n${shuffledClientesPackages}\n\n${randomDespedida()}`,
+    `${randomIntroduction(name, salesPersonName)}\n\nActualmente estás pagando mucho por su servicio Actual=. ¡Tenemos promociones para ti! Aquí te dejo algunas opciones:\n\n${shuffledClientesPackages}\n\n${randomDespedida()}`,
+    `${randomIntroduction(name, salesPersonName)}\n\n Le podemos ofrecer estas nuevas promociones exclusivas:\n\n${shuffledClientesPackages}\n\n${randomDespedida()}`,
     `${randomIntroduction(name, salesPersonName)}\n\n¡No te pierdas nuestras nuevas ofertas! Aquí te dejo las opciones disponibles:\n\n${shuffledClientesPackages}\n\n${randomDespedida()}`,
   ];
 

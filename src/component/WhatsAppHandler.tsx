@@ -20,7 +20,6 @@ const WhatsAppHandler: React.FC<WhatsAppHandlerProps> = ({ phoneNumbers, message
   const sendWhatsAppMessage = async (phoneNumber: string, name: string, message: string, index: number) => {
     try {
       if (sentMessagesSet.current.has(index)) {
-        console.log(`Mensaje ya enviado al número: ${phoneNumber}`);
         return; // Evitamos enviar múltiples veces al mismo número
       }
 
