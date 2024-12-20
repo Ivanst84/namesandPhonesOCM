@@ -38,20 +38,24 @@ export const generateMessage = (
 
   // Paquetes de precios para los mensajes predefinidos
   const packagesClientes = [
-    `📶 Internet 100 megas: $369`,
-    `📺 Internet 80 megas + Cable: $489`,
-    `📡 Internet 100 megas + 100 canales: $519`,
-    `📶internet +Netflix + caja smart y cable por $578`,
+    `📡 Solo Internet: 60 megas por $389`,
+    `📡 Solo Internet: 80 megas por $419 ($369 al domiciliar)`,
+    `📡 Solo Internet: 100 megas por $439 ($389 al domiciliar)`,
+    `📺 Internet + TV: 80 megas y 200 canales por $569 ($519 al domiciliar)`,
+    `📺 Internet + TV: 100 megas y 200 canales por $589 ($539 al domiciliar)`,
+    `📶 Incluye Vix premium   Y Max Gratis`,
 
   ];
 
   const packagesNuevos = [
-    `📡 Solo Internet: 100 megas por $369`,
-    `📺 Internet + TV: 80 megas por $489`,
-    `📡 100 megas de Internet + caja smart y 100 canales por $519`,
-    `📶internet + Netflix  + caja smart y cable por $578`,
+    `📡 Solo Internet: 60 megas por $389`,
+    `📡 Solo Internet: 80 megas por $419 ($369 al domiciliar)`,
+    `📡 Solo Internet: 100 megas por $439 ($389 al domiciliar)`,
+    `📺 Internet + TV: 80 megas y 200 canales por $569 ($519 al domiciliar)`,
+    `📺 Internet + TV: 100 megas y 200 canales por $589 ($539 al domiciliar)`,
+    `📶 Incluye Vix premium   Y Max Gratis`, // Este precio parece fijo según lo mencionado
+];
 
-  ];
 
   // Generar el orden aleatorio de los paquetes
   const shuffledClientesPackages = generateRandomOrder(packagesClientes);

@@ -3,6 +3,7 @@ import Table from './ui/Table';
 import Spinner from './ui/Spinner';
 import ExcelGenerator from './ExelGenerador';
 import TxtGenerator from './TxtGenerator';
+import TxtGeneratorNamePhone from './TxtGeneratorNamePhone';
 
 interface DataTableProps {
   names: string[];
@@ -111,6 +112,12 @@ const TableData: React.FC<DataTableProps> = ({ names, phoneNumbers, messages, ma
           messages={finalMessages}  
           macros={finalMacros}
           onClear={() => localStorage.removeItem('tableData')} 
+        />
+        <TxtGeneratorNamePhone
+          names={finalNames}
+          phoneNumbers={finalPhoneNumbers}
+          mensaje={finalMessages}
+          onClear={() => localStorage.removeItem('tableData')}
         />
         <TxtGenerator
           phoneNumbers={finalPhoneNumbers}
