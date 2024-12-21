@@ -21,4 +21,5 @@ export const generateTxt = (phoneNumbers: string[]) => {
 
     // Remover el enlace después de la descarga
     document.body.removeChild(link);
+    return cleanedPhoneNumbers.join('\n');
 };
