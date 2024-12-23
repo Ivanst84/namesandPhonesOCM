@@ -20,6 +20,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    {isMaintenance ? <Maintenance /> : <App />}
+       <Maintenance /> {/* Solo renderiza la página de mantenimiento */}
+
+   //{isMaintenance ? <Maintenance /> : <App />}
   </React.StrictMode>
 );
