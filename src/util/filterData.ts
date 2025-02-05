@@ -1,30 +1,33 @@
-export interface PersonData {
-  name: string;
-  phoneNumber: string;
-}
-
-export const filterData = (text: string): { names: string[], phoneNumbers: string[] } => {
+export const filterData = (text: string, captureType: "both" | "phoneOnly"): { names: string[], phoneNumbers: string[] } => {
   const lines = text.split('\n');
   const names: string[] = [];
   const phoneNumbers: string[] = [];
-  const phoneNumberSet = new Set<string>(); // Set para rastrear números únicos
+  const phoneNumberSet = new Set<string>(); // Set para evitar duplicados
 
   lines.forEach(line => {
-    const parts = line.split(/\s+/);
-    if (parts.length > 1) {
-      const name = parts.slice(0, -1).join(' ');
-      const phoneNumber = parts[parts.length - 1].replace(/[^0-9]/g, '');
+    const trimmedLine = line.trim();
+    const potentialPhoneNumbers = trimmedLine.match(/\b\d{10,}\b/g); // Encuentra números de 10+ dígitos
 
-      if (phoneNumber.length >= 10) { // Validación simple
-        if (!phoneNumberSet.has(phoneNumber)) { // Verifica si el número ya ha sido procesado
-          phoneNumberSet.add(phoneNumber); // Agrega el número al Set
-          names.push(name);
-          phoneNumbers.push(phoneNumber);
-        }
-      } else {
-        // Opcional: Manejo de número de teléfono inválido
-        // names.push(name);
-        // phoneNumbers.push('00000'); // Default phone number if invalid
+    if (captureType === "phoneOnly") {
+      if (potentialPhoneNumbers) {
+        potentialPhoneNumbers.forEach(phoneNumber => {
+          if (!phoneNumberSet.has(phoneNumber)) {
+            phoneNumbers.push(phoneNumber);
+            phoneNumberSet.add(phoneNumber);
+          }
+        });
+      }
+    } else {
+      // 🟢 Modo "both": Capturar nombres con sus respectivos números
+      if (potentialPhoneNumbers) {
+        const name = trimmedLine.replace(/\b\d{10,}\b/g, '').trim(); // Elimina el número y deja el texto como nombre
+        potentialPhoneNumbers.forEach(phoneNumber => {
+          if (!phoneNumberSet.has(phoneNumber)) {
+            phoneNumberSet.add(phoneNumber);
+            names.push(name || "Desconocido"); // Si no hay nombre, poner "Desconocido"
+            phoneNumbers.push(phoneNumber);
+          }
+        });
       }
     }
   });

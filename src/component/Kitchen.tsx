@@ -8,10 +8,12 @@ import TableData from './TablaDatos';
 import ImageProcessor from './ImageOCR/ImageProcessor';
 import Logo from './Logo';
 import { signOut } from 'next-auth/react';
+import ModalComponent from './ui/ModalComponent';
 const extractFirstName = (fullName: string) => {
   const nameParts = fullName.split(' ');
   return nameParts.length > 0 ? nameParts[0] : '';
 };
+
 
 const OCRComponent: React.FC = () => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
@@ -23,13 +25,15 @@ const OCRComponent: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false); // Estado para manejar el spinner
   const firstNames = names.map(extractFirstName);
 
-  const salesPersonMessages = firstNames.map(name => 
-    generateMessage(name, salesPersonName, messageType, customMessage) // Pasa el mensaje personalizado
+  const [showModal, setShowModal] = useState<boolean>(true);
+  const [captureType, setCaptureType] = useState<"both" | "phoneOnly">("both");
+
+  const salesPersonMessages = names.map(name => 
+    generateMessage(extractFirstName(name), salesPersonName, messageType, customMessage) // Pasa el mensaje personalizado
   );
 
-  const encodeMessage = (message: string) => {
-    return encodeURIComponent(message);
-  };
+  const encodeMessage = (message: string) => encodeURIComponent(message);
+
 
   const macros = firstNames.map((name, index) => 
     `="https://wa.me/${phoneNumbers[index]}?text=${encodeMessage(salesPersonMessages[index])}"`
@@ -56,10 +60,13 @@ const OCRComponent: React.FC = () => {
     const newMessage = customMessage + emoji;
     setCustomMessage(newMessage);
   };
+ 
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6 space-y-6">
-      {/* Botón de Logout */}
+
+<ModalComponent isOpen={showModal} onClose={() => setShowModal(false)} onSelect={setCaptureType} />
+
       <button
         onClick={async () => {
           await signOut();
@@ -125,29 +132,39 @@ const OCRComponent: React.FC = () => {
         onRemoveImage={handleRemoveImage}
         loading={loading} 
       />
+      <ModalComponent 
+  isOpen={showModal} 
+  onClose={() => setShowModal(false)} 
+  onSelect={setCaptureType} 
+/>
   
       {/* Procesador de imágenes */}
       <ImageProcessor 
         selectedImages={selectedImages}
         setNames={setNames}
         setPhoneNumbers={setPhoneNumbers}
+        captureType={captureType}  // 🔥 Pasamos la opción seleccionada
+
       />
   
-      {/* Tabla de datos */}
-      {firstNames.length > 0 && phoneNumbers.length > 0 && (
-        <div className="mt-6 w-full max-w-6xl">
-          <TableData 
-            names={firstNames} 
-            phoneNumbers={phoneNumbers}  
-            messages={salesPersonMessages} 
-            macros={macros}  
-            loading={loading} 
-            onGenerateExcel={handleGenerateExcel} 
-          />
-        </div>
-      )}
+
+  { phoneNumbers.length > 0 && (
+    <div className="mt-6 w-full max-w-6xl">
+      
+    <TableData 
+      names={names} 
+      phoneNumbers={phoneNumbers}  
+      messages={salesPersonMessages} 
+      macros={macros}  
+      loading={loading} 
+      onGenerateExcel={handleGenerateExcel} 
+      captureType={captureType} // 🔥 Se pasa el captureType
+    />
+  </div>
+)}
+
     </div>
   );
-}  
-
+}
 export default OCRComponent;
+
