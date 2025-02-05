@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Table from './ui/Table';
 import Spinner from './ui/Spinner';
-import ExcelGenerator from './ExelGenerador';
+import ExcelGengiterator from './ExelGenerador';
 import TxtGenerator from './TxtGenerator';
 import TxtGeneratorNamePhone from './TxtGeneratorNamePhone';
 const extractFirstName = (fullName: string) => {
