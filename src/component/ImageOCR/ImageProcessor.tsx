@@ -113,7 +113,7 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
     if (selectedImages.length > 0) {
       processImages();
     }
-  }, [selectedImages]);
+  }, [selectedImages, processImages]);
 
   return <div>{isLoading && <Spinner />}</div>;
 };

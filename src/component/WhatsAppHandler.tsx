@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 
 interface WhatsAppHandlerProps {
   phoneNumbers: string[];
@@ -46,7 +46,7 @@ const WhatsAppHandler: React.FC<WhatsAppHandlerProps> = ({ phoneNumbers, message
     }
   };
 
-  const automateMessageSending = () => {
+  const automateMessageSending = useCallback(() => {
     let index = 0;
     const intervalId = setInterval(async () => {
       if (index >= phoneNumbers.length) {
@@ -60,16 +60,18 @@ const WhatsAppHandler: React.FC<WhatsAppHandlerProps> = ({ phoneNumbers, message
 
       index++;
     }, getRandomDelay());
-  };
+  }, [phoneNumbers, names, messages]); // ✅ Dependencias correctas
+
 
   // Automatizar el envío cuando se llame a este componente
   React.useEffect(() => {
     if (phoneNumbers.length > 0) {
       automateMessageSending();
     }
-  }, [phoneNumbers]);
-
+  }, [phoneNumbers,automateMessageSending]); // ✅ Se agrega la dependencia
+  
   return null;
 };
 
 export default WhatsAppHandler;
+

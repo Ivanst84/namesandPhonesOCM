@@ -63,31 +63,33 @@ const TableData: React.FC<DataTableProps> = ({
  
   useEffect(() => {
     if (finalPhoneNumbers.length === 0) return; // 🚀 Evita guardar datos vacíos
-
+  
     const dataToStore = JSON.stringify({
       names: finalNames,
       phoneNumbers: finalPhoneNumbers,
       messages: finalMessages,
       macros: finalMacros,
     });
-   
+  
     try {
-      if (typeof chrome !== 'undefined' && chrome.runtime) {
-
-        chrome.runtime.sendMessage({
-          nombres: finalNames,
-          numeros: finalPhoneNumbers,
-          mensajes: finalMessages,
-        }, (response) => {
-        });
+      if (typeof window !== "undefined" && window.chrome && chrome.runtime && chrome.runtime.sendMessage) {
+        chrome.runtime.sendMessage(
+          {
+            nombres: finalNames,
+            numeros: finalPhoneNumbers,
+            mensajes: finalMessages,
+          },
+       
+        );
       } else {
-        console.error("API de Chrome no disponible. Guardando en localStorage.");
-        localStorage.setItem('fallbackData', dataToStore);
+        console.warn("API de Chrome no disponible. Guardando en localStorage.");
+        localStorage.setItem("fallbackData", dataToStore);
       }
     } catch (error) {
+      console.error("Error al guardar datos:", error);
     }
   }, [finalNames, finalPhoneNumbers, finalMessages, finalMacros]);
-
+  
   
   const sendWhatsAppMessage = (phoneNumber: string, name: string, message: string, index: number) => {
     const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/.test(navigator.userAgent);
