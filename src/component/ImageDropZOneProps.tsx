@@ -32,10 +32,13 @@ const ImageDropZone: React.FC<ImageDropZoneProps> = ({ onDrop }) => {
           .filter(item => item.kind === 'file')
           .map(item => item.getAsFile())
           .filter((file): file is File => file !== null);
-        if (files.length > 0) {
-          onDrop(files);
+          console.log("📸 Imágenes pegadas detectadas:", files.length); // ✅ Verifica cuántas imágenes se detectan
+
+          if (files.length > 0) {
+          onDrop(files);} else{      console.log("⚠ No se detectaron imágenes en el portapapeles.");
+          }
         }
-      }
+      
     };
     document.addEventListener('paste', handlePaste);
     return () => {

@@ -58,7 +58,6 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
         const preprocessedCanvas = preprocessImage(img);
         const preprocessedImage = preprocessedCanvas.toDataURL('image/png');
 
-        console.log("🔍 Procesando imagen con OCR...");
         const { data: { text } } = await Tesseract.recognize(preprocessedImage, 'eng');
 
         console.log("📜 Texto detectado por OCR:\n", text);
@@ -66,9 +65,7 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
         const { names: parsedNames, phoneNumbers: parsedPhoneNumbers } = filterData(text, captureType);
         const formattedPhoneNumbers = parsedPhoneNumbers.map(formatPhoneNumber);
 
-        console.log("📞 Números detectados:", parsedPhoneNumbers);
-        console.log("👤 Nombres detectados:", parsedNames);
-
+        
         if (captureType === "both") {
           console.log("📞 Números detectados en both:", parsedPhoneNumbers);
           console.log("👤 Nombres detectados:", parsedNames);
@@ -105,11 +102,10 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
     const finalNames = captureType === "both" ? allNames.slice(0, maxLength) : Array(maxLength).fill('');
     const finalPhoneNumbers = allPhoneNumbers.slice(0, maxLength);
 
-    console.log("ANTES DE MANDARLO AL SET - finalNames:", finalNames);
-    console.log("ANTES DE MANDARLO AL SET - finalPhoneNumbers:", finalPhoneNumbers);
     // Actualizamos los estados solo una vez
-    setNames(finalNames);
-    setPhoneNumbers(finalPhoneNumbers);
+    setNames(prevNames => [...prevNames, ...finalNames]); 
+    setPhoneNumbers(prevPhoneNumbers => [...prevPhoneNumbers, ...finalPhoneNumbers]);
+    
     setIsLoading(false);
   }, [selectedImages, setNames, setPhoneNumbers, captureType]); // Ya no incluimos processedImages en las dependencias
 
@@ -117,7 +113,7 @@ const ImageProcessor: React.FC<ImageProcessorProps> = ({ selectedImages, setName
     if (selectedImages.length > 0) {
       processImages();
     }
-  }, [selectedImages, processImages]);
+  }, [selectedImages]);
 
   return <div>{isLoading && <Spinner />}</div>;
 };

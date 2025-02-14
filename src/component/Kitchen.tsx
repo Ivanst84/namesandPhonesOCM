@@ -47,14 +47,23 @@ const OCRComponent: React.FC = () => {
     console.log('Generando archivo Excel...');
   };
 
-
-    const handleImageUpload = (files: File[]) => {
-    setLoading(true); // Mostrar el spinner
+  const handleImageUpload = (files: File[]) => {
+    if (!files || files.length === 0) return;
+  
+    setLoading(true);
+  
     const imageUrls = files.map(file => URL.createObjectURL(file));
-    setSelectedImages(prevImages => prevImages.concat(imageUrls));
-    setLoading(false); // Ocultar el spinner cuando se complete
+  
+    console.log("📂 Imágenes antes de agregar nuevas:", selectedImages);
+    console.log("➕ Imágenes a agregar:", imageUrls);
+  
+    // 🔥 SOLUCIÓN: Mantener imágenes previas al agregar nuevas
+    setSelectedImages(prevImages => [...prevImages, ...imageUrls]);
+  
+    setLoading(false);
   };
-
+  
+  
 
   const handleEmojiSelect = (emoji: string) => {
     const newMessage = customMessage + emoji;

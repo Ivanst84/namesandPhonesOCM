@@ -31,13 +31,9 @@ const TableData: React.FC<DataTableProps> = ({
   const [finalMessages, setFinalMessages] = useState<string[]>([]);
   const [finalMacros, setFinalMacros] = useState<string[]>([]);
   const [disabledButtons, setDisabledButtons] = useState<Set<number>>(new Set());
-  console.log("📊 nombres finales :", finalNames);
-  console.log("📞 Final Phone Numbers primera:", finalPhoneNumbers);
-  console.log("✉ Final Messages:", finalMessages);
-  
+
   useEffect(() => {
     if (phoneNumbers.length === 0) return; // 🚀 Si no hay números, no hagas nada
-    console.log("🛠 Procesando datos en TableData...");
 
     // 🔥 Filtrar duplicados y almacenar el resultado
     const uniquePhoneNumbers = new Set<string>();
@@ -77,21 +73,18 @@ const TableData: React.FC<DataTableProps> = ({
    
     try {
       if (typeof chrome !== 'undefined' && chrome.runtime) {
-        console.log('Guardando datos en chrome.storage');
 
         chrome.runtime.sendMessage({
           nombres: finalNames,
           numeros: finalPhoneNumbers,
           mensajes: finalMessages,
         }, (response) => {
-          console.log('Datos guardados correctamente', response);
         });
       } else {
         console.error("API de Chrome no disponible. Guardando en localStorage.");
         localStorage.setItem('fallbackData', dataToStore);
       }
     } catch (error) {
-      console.error("Error al enviar mensaje a la extensión:", error);
     }
   }, [finalNames, finalPhoneNumbers, finalMessages, finalMacros]);
 
